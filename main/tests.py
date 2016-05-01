@@ -4,6 +4,25 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.encoding import smart_str
 
+MEM_FIELDS = [
+    'utime',
+    'stime',
+    'maxrss',
+    'ixrss',
+    'idrss',
+    'isrss',
+    'minflt',
+    'majflt',
+    'nswap',
+    'inblock',
+    'oublock',
+    'msgsnd',
+    'msgrcv',
+    'nsignals',
+    'nvcsw',
+    'nivcsw',
+]
+
 
 class BasicTest(TestCase):
     def test_returns_json(self):
@@ -18,3 +37,14 @@ class CmdlineTest(TestCase):
         r = self.client.get(reverse('expvar'))
         d = json.loads(smart_str(r.content))
         self.assertIn('cmdline', d)
+
+
+class MemoryTest(TestCase):
+    def test_memory(self):
+        r = self.client.get(reverse('expvar'))
+        d = json.loads(smart_str(r.content))
+        self.assertIn('memory', d)
+        m = d['memory']
+        for f in MEM_FIELDS:
+            self.assertIn(f, m)
+        
