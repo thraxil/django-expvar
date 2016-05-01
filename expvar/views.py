@@ -1,35 +1,13 @@
 import importlib
 import inspect
 import json
-import resource
+
 
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
 
 from . import ExpVar
-
-
-def get_memory_usage():
-    memstats = resource.getrusage(resource.RUSAGE_SELF)
-    return dict(
-        utime=memstats.ru_utime,
-        stime=memstats.ru_stime,
-        maxrss=memstats.ru_maxrss,
-        ixrss=memstats.ru_ixrss,
-        idrss=memstats.ru_idrss,
-        isrss=memstats.ru_isrss,
-        minflt=memstats.ru_minflt,
-        majflt=memstats.ru_majflt,
-        nswap=memstats.ru_nswap,
-        inblock=memstats.ru_inblock,
-        oublock=memstats.ru_oublock,
-        msgsnd=memstats.ru_msgsnd,
-        msgrcv=memstats.ru_msgrcv,
-        nsignals=memstats.ru_nsignals,
-        nvcsw=memstats.ru_nvcsw,
-        nivcsw=memstats.ru_nivcsw,
-    )
 
 
 def run_single_class(name, obj):
@@ -58,9 +36,7 @@ def load_expvars_from_app(app):
 
 class ExpVarView(View):
     def get(self, request):
-        d = dict(
-            memory=get_memory_usage(),
-        )
+        d = dict()
         for app in settings.INSTALLED_APPS:
             appvars = load_expvars_from_app(app)
             d.update(appvars)
