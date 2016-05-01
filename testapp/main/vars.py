@@ -6,3 +6,7 @@ class ExampleExpVar(expvar.ExpVar):
 
     def value(self):
         return 42
+
+
+class PlainExpVar(expvar.ExpVar):
+    name = "plain"
