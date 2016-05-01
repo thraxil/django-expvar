@@ -1,4 +1,4 @@
-""" run tests for django-expvars
+""" run tests for django-expvar
 
 $ virtualenv ve
 $ ./ve/bin/pip install Django==1.9
@@ -18,7 +18,7 @@ def main():
     settings.configure(
         INSTALLED_APPS=(
             'main',
-            'expvars',
+            'expvar',
         ),
         TEST_RUNNER='django.test.runner.DiscoverRunner',
 
@@ -26,7 +26,7 @@ def main():
         ROOT_URLCONF='testapp.urls',
 
         PROJECT_APPS=[
-            'expvars',
+            'expvar',
         ],
         # Django replaces this, but it still wants it. *shrugs*
         DATABASES={
