@@ -1,10 +1,12 @@
-test:
+test: ve/bin/python
+	./ve/bin/flake8 expvar --max-complexity=7
+	./ve/bin/python runtests.py
+
+ve/bin/python: setup.py
 	rm -rf ve
 	virtualenv ve
 	./ve/bin/pip install .
 	./ve/bin/pip install flake8
-	./ve/bin/flake8 expvar --max-complexity=7
-	cd testapp && ../ve/bin/python manage.py test
 
 clean:
 	rm -rf ve
