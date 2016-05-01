@@ -12,6 +12,7 @@ install:
   - pip install coveralls
 script:
   - flake8 expvar
+  - flake8 testapp
   - python runtests.py
   - coverage run --source=expvar runtests.py
 after_success:

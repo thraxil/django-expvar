@@ -16,7 +16,7 @@ def main():
     # get Django running tests
     settings.configure(
         INSTALLED_APPS=(
-            'main',
+            'testapp.main',
             'expvar',
         ),
         TEST_RUNNER='django.test.runner.DiscoverRunner',

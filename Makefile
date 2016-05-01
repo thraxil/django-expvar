@@ -1,5 +1,5 @@
 test: ve/bin/python
-	./ve/bin/flake8 expvar --max-complexity=7
+	./ve/bin/flake8 expvar testapp --max-complexity=7
 	./ve/bin/python runtests.py
 
 ve/bin/python: setup.py

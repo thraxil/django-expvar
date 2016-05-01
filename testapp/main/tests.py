@@ -47,4 +47,3 @@ class MemoryTest(TestCase):
         m = d['memory']
         for f in MEM_FIELDS:
             self.assertIn(f, m)
-        
