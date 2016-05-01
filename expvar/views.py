@@ -2,7 +2,6 @@ import importlib
 import inspect
 import json
 import resource
-import sys
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -59,9 +58,7 @@ def load_expvars_from_app(app):
 
 class ExpVarView(View):
     def get(self, request):
-        cmdline = [sys.executable] + sys.argv
         d = dict(
-            cmdline=cmdline,
             memory=get_memory_usage(),
         )
         for app in settings.INSTALLED_APPS:
