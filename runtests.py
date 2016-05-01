@@ -2,7 +2,6 @@
 
 $ virtualenv ve
 $ ./ve/bin/pip install Django==1.9
-$ ./ve/bin/pip install -r test_reqs.txt
 $ ./ve/bin/python runtests.py
 """
 
