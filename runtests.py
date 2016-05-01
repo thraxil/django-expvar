@@ -17,6 +17,7 @@ def main():
     settings.configure(
         INSTALLED_APPS=(
             'testapp.main',
+            'testapp.noexpvars',
             'expvar',
         ),
         TEST_RUNNER='django.test.runner.DiscoverRunner',
