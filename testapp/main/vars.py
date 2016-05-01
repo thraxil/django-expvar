@@ -10,3 +10,9 @@ class ExampleExpVar(expvar.ExpVar):
 
 class PlainExpVar(expvar.ExpVar):
     name = "plain"
+
+
+class Other(object):
+    """ this one exists to make sure it doesn't barf on a
+    non-ExpVar object """
+    pass
