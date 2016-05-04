@@ -56,3 +56,13 @@ class FindTest(TestCase):
         d = json.loads(smart_str(r.content))
         self.assertIn('example1', d)
         self.assertEqual(d['example1'], 42)
+
+
+class ExtendTest(TestCase):
+    def test_memory(self):
+        r = self.client.get(reverse('expvar'))
+        d = json.loads(smart_str(r.content))
+        self.assertIn('memory', d)
+        m = d['memory']
+        self.assertIn('New', m)
+        self.assertEqual(m['New'], 78)

@@ -2,7 +2,6 @@ import importlib
 import inspect
 import json
 
-
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
@@ -12,16 +11,36 @@ from . import ExpVar
 
 def run_single_class(name, obj):
     if not issubclass(obj, ExpVar):
-        return dict()
+        return []
     if name == "ExpVar":
         # skip the parent class
-        return dict()
+        return []
     c = obj()
-    return {c.get_name(): c.value()}
+    name = c.get_name()
+    value = c.value()
+    evars = []
+    if isinstance(value, dict):
+        for k, v in value.items():
+            evars.append(([name, k], v))
+    else:
+        evars = [([name], value)]
+    return evars
+
+
+def insert_nested_key(keys, value, d):
+    current = d
+    for k in keys[:-1]:
+        if k in current:
+            current = current[k]
+        else:
+            current[k] = dict()
+            current = current[k]
+    current[keys[-1]] = value
+    return d
 
 
 def load_expvars_from_app(app):
-    d = dict()
+    d = []
     a = None
     try:
         a = importlib.import_module("{}.vars".format(app))
@@ -30,7 +49,7 @@ def load_expvars_from_app(app):
         pass
     if a is not None:
         for name, obj in inspect.getmembers(a, inspect.isclass):
-            d.update(run_single_class(name, obj))
+            d.extend(run_single_class(name, obj))
     return d
 
 
@@ -39,7 +58,8 @@ class ExpVarView(View):
         d = dict()
         for app in settings.INSTALLED_APPS:
             appvars = load_expvars_from_app(app)
-            d.update(appvars)
+            for keys, v in appvars:
+                d = insert_nested_key(keys, v, d)
         return HttpResponse(
             json.dumps(d),
             content_type="application/json",

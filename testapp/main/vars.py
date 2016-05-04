@@ -12,6 +12,13 @@ class PlainExpVar(expvar.ExpVar):
     name = "plain"
 
 
+class ExtendMemory(expvar.ExpVar):
+    name = "memory"
+
+    def value(self):
+        return {"New": 78}
+
+
 class Other(object):
     """ this one exists to make sure it doesn't barf on a
     non-ExpVar object """
