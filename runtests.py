@@ -25,9 +25,6 @@ def main():
         COVERAGE_EXCLUDES_FOLDERS=['migrations'],
         ROOT_URLCONF='testapp.urls',
 
-        PROJECT_APPS=[
-            'expvar',
-        ],
         # Django replaces this, but it still wants it. *shrugs*
         DATABASES={
             'default': {
