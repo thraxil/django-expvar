@@ -56,7 +56,12 @@ def load_expvars_from_app(app):
 class ExpVarView(View):
     def get(self, request):
         d = dict()
+        skip = []
+        if hasattr(settings, 'EXPVAR_SKIP'):
+            skip = settings.EXPVAR_SKIP
         for app in settings.INSTALLED_APPS:
+            if app in skip:
+                continue
             appvars = load_expvars_from_app(app)
             for keys, v in appvars:
                 d = insert_nested_key(keys, v, d)

@@ -66,3 +66,10 @@ class ExtendTest(TestCase):
         m = d['memory']
         self.assertIn('New', m)
         self.assertEqual(m['New'], 78)
+
+
+class TestSkip(TestCase):
+    def test_skip(self):
+        r = self.client.get(reverse('expvar'))
+        d = json.loads(smart_str(r.content))
+        self.assertNotIn('skipthis', d)

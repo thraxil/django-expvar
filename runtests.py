@@ -1,7 +1,7 @@
 """ run tests for django-expvar
 
 $ virtualenv ve
-$ ./ve/bin/pip install Django==1.9
+$ ./ve/bin/pip install .
 $ ./ve/bin/python runtests.py
 """
 
@@ -18,8 +18,10 @@ def main():
         INSTALLED_APPS=(
             'testapp.main',
             'testapp.noexpvars',
+            'testapp.skipme',
             'expvar',
         ),
+        EXPVAR_SKIP=['testapp.skipme'],
         TEST_RUNNER='django.test.runner.DiscoverRunner',
 
         COVERAGE_EXCLUDES_FOLDERS=['migrations'],

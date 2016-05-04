@@ -44,3 +44,6 @@ class Example(expvar.ExpVar):
         return 42
 ```
 
+In your django settings, you can optionally specify a `EXPVAR_SKIP`
+variable with a list of apps to ignore (ie, any `vars.py` files in
+those apps will be ignored).
