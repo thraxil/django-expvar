@@ -12,7 +12,7 @@ class CmdlineExpVar(ExpVar):
 
 
 class MemoryExpVar(ExpVar):
-    name = "memory"
+    name = "resource"
 
     def value(self):
         memstats = resource.getrusage(resource.RUSAGE_SELF)

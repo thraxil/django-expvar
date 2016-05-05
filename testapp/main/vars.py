@@ -13,7 +13,7 @@ class PlainExpVar(expvar.ExpVar):
 
 
 class ExtendMemory(expvar.ExpVar):
-    name = "memory"
+    name = "resource"
 
     def value(self):
         return {"New": 78}

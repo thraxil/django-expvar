@@ -39,12 +39,12 @@ class CmdlineTest(TestCase):
         self.assertIn('cmdline', d)
 
 
-class MemoryTest(TestCase):
-    def test_memory(self):
+class ResourceTest(TestCase):
+    def test_resource(self):
         r = self.client.get(reverse('expvar'))
         d = json.loads(smart_str(r.content))
-        self.assertIn('memory', d)
-        m = d['memory']
+        self.assertIn('resource', d)
+        m = d['resource']
         for f in MEM_FIELDS:
             self.assertIn(f, m)
 
@@ -59,11 +59,11 @@ class FindTest(TestCase):
 
 
 class ExtendTest(TestCase):
-    def test_memory(self):
+    def test_resource(self):
         r = self.client.get(reverse('expvar'))
         d = json.loads(smart_str(r.content))
-        self.assertIn('memory', d)
-        m = d['memory']
+        self.assertIn('resource', d)
+        m = d['resource']
         self.assertIn('New', m)
         self.assertEqual(m['New'], 78)
 
