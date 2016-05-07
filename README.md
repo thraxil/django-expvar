@@ -22,16 +22,9 @@ Then, accessing `/debug/vars` on your app will return a JSON dict with
 the exposed variables, which you can use for monitoring, debugging,
 etc.
 
-By default, `expvar` reports commandline arguments and some basic
-memory stats, just like the Go package. (currently, the particular
-memory stats don't match up with what Go reports. That's being worked
-on so tools like [expvarmon](https://github.com/divan/expvarmon) can
-be used out of the box, but the Python and Go runtimes are not exactly
-identical...)
-
-You can also easily expose other variables through the expvar
-endpoint. In your django app, just add a `vars.py` file with some
-classes that subclass `expvar.ExpVar` like so:
+You can easily expose variables through the expvar endpoint. In your
+django app, just add a `vars.py` file with some classes that subclass
+`expvar.ExpVar` like so:
 
 ```
 import expvar
@@ -48,9 +41,29 @@ In your django settings, you can optionally specify a `EXPVAR_SKIP`
 variable with a list of apps to ignore (ie, any `vars.py` files in
 those apps will be ignored).
 
+If multiple variables declare the same `name`, two different things
+can happen:
+
+* if they return scalar values, it's a collision and only one of them
+  will get reported. This is probably not what you intended, so try to
+  stick to unique names
+* if they return dicts as their value, variables with the same name
+  will have their values merged.
+
 ## plugins:
+
+By default, `expvar` will only expose the variables that you set up.
+
+There are a few additional packages available though that act as
+plugins to provide generic data on commandline arguments, process
+data, etc. Generally, once you have `expvar` installed, you can pip
+install them and add them to `INSTALLED_APPS` and that's enough to use
+them.
 
 * [django-expvar-cmdline](https://github.com/thraxil/django-expvar-cmdline) -
   reports the commandline data for the process (useful for
   compatability with expvarmon and similar, but may pose a security
   risk if you pass secrets on the commandline)
+* [django-expvar-resource](https://github.com/thraxil/django-expvar-resource) -
+  reports various info on resource usage (memory, interrupts, etc) via
+  a library in the Python's standard lib.

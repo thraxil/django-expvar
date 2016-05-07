@@ -21,6 +21,7 @@ def main():
             'testapp.skipme',
             'expvar',
             'expvarcmdline',
+            'expvarresource',
         ),
         EXPVAR_SKIP=['testapp.skipme'],
         TEST_RUNNER='django.test.runner.DiscoverRunner',

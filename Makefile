@@ -8,6 +8,7 @@ ve/bin/python: setup.py
 	./ve/bin/pip install .
 	./ve/bin/pip install flake8
 	./ve/bin/pip install django-expvar-cmdline
+	./ve/bin/pip install django-expvar-resource
 
 clean:
 	rm -rf ve
