@@ -1,14 +1,6 @@
 import resource
-import sys
 
 from . import ExpVar
-
-
-class CmdlineExpVar(ExpVar):
-    name = "cmdline"
-
-    def value(self):
-        return [sys.executable] + sys.argv
 
 
 class MemoryExpVar(ExpVar):

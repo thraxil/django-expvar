@@ -7,6 +7,7 @@ ve/bin/python: setup.py
 	virtualenv ve
 	./ve/bin/pip install .
 	./ve/bin/pip install flake8
+	./ve/bin/pip install django-expvar-cmdline
 
 clean:
 	rm -rf ve

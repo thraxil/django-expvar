@@ -47,3 +47,10 @@ class Example(expvar.ExpVar):
 In your django settings, you can optionally specify a `EXPVAR_SKIP`
 variable with a list of apps to ignore (ie, any `vars.py` files in
 those apps will be ignored).
+
+## plugins:
+
+* [django-expvar-cmdline](https://github.com/thraxil/django-expvar-cmdline) -
+  reports the commandline data for the process (useful for
+  compatability with expvarmon and similar, but may pose a security
+  risk if you pass secrets on the commandline)
