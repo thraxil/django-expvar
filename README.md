@@ -67,3 +67,29 @@ them.
 * [django-expvar-resource](https://github.com/thraxil/django-expvar-resource) -
   reports various info on resource usage (memory, interrupts, etc) via
   a library in the Python's standard lib.
+* [django-expvar-psutil](https://github.com/thraxil/django-expvar-psutil) -
+  reports even more CPU, memory, swap, and network stats via the
+  'psutil' library.
+
+# future plans/additional notes:
+
+* TODO: a wrapper on probably either/both django-expvar-resource
+  and/or django-expvar-psutil that exposes the appropriate metrics
+  from those with the exact same names as Go's expvar uses ("Alloc",
+  "HeapInUse", etc.) Ideally, I'd like to be able to just point
+  expvarmon at a django app and have it be useful immediately. Go's
+  internals are so different than Python's though so a lot of the GC
+  related metrics aren't going to carry over.
+
+The Go expvar package has a nice approach of letting you declare
+exposed variables and set their value, increment, etc. without having
+to worry about the underlying concurrency issues. I'm on the fence
+about whether it's appropriate to port this over to Django. Django
+apps can be deployed in a number of different ways (multi-process,
+multi-threaded, etc) and it would be non-trivial to make that shared
+variable sort of approach work across all of them (technically, you
+can even put a Django app behind CGI so there would be zero
+persistence across requests). I think the more "pull based" approach
+that's there now is probably cleanest. You can always just use
+Django's built in caching functionality if you want to avoid
+recalculating stuff too much.
